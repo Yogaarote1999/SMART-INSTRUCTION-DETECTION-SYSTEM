@@ -90,3 +90,5 @@ For major changes, open an issue first to discuss the change.
 ## 📄 License
 
 This project is created for learning and academic purposes.
+
+Minor update
