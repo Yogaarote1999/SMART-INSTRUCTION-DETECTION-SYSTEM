@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Instruction Detection System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/index.css') }}">
+
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">Smart IDS</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="{{ url_for('home') }}#home" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('home') }}#about" class="nav-link">About</a></li>
+                <li><a href="{{ url_for('home') }}#features" class="nav-link">Features</a></li>
+                <li><a href="{{ url_for('prediction') }}" class="nav-link">Prediction</a></li>
+                <li><a href="{{ url_for('register') }}" class="nav-link">Register</a></li>
+                <li><a href="{{ url_for('login') }}" class="nav-link active">Login</a></li>
+            </ul>
+
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Login to access your dashboard and predict instructions.</p>
+
+                <form id="login-form" class="login-form" method="POST" action="{{ url_for('login') }}">
+
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" name="email" placeholder="Enter your email" required>
+                        <span class="error-message" id="login-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                        <span class="error-message" id="login-password-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                </form>
+
+                <div class="auth-status" id="login-status"></div>
+
+                <p class="auth-switch">Don't have an account?
+                     <a href="{{ url_for('register') }}">Register now</a>
+                </p>
+
+            </div>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/prediction.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/output.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/auth.js') }}"></script>
+
+</body>
+</html>
+

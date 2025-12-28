@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart IDS - Prediction Result</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/index.css') }}">
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🧠 Smart IDS</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('prediction') }}" class="active">Prediction</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="prediction-section">
+        <div class="prediction-container">
+
+            <h1>Prediction Result</h1>
+
+            <!-- RESULT CARD -->
+            <div class="demo-result-card 
+                {% if prediction_result|lower != 'normal' %} result-danger 
+                {% else %} result-success 
+                {% endif %}
+            ">
+
+                <div class="demo-result-icon">
+                    {% if prediction_result|lower != "normal" %}
+                        🚨
+                    {% else %}
+                        ✅
+                    {% endif %}
+                </div>
+
+                <div>
+
+                    <h2 class="demo-result-title">
+                        {% if prediction_result|lower != "normal" %}
+                            ⚠️ ATTACK DETECTED – {{ prediction_result|upper }}
+                        {% else %}
+                            ✔ NORMAL TRAFFIC
+                        {% endif %}
+                    </h2>
+
+                    <p class="demo-result-message">
+                        {% if prediction_result|lower != "normal" %}
+                            Suspicious malicious traffic detected. Take immediate action.
+                        {% else %}
+                            No malicious activity detected. Traffic appears safe.
+                        {% endif %}
+                    </p>
+
+                    <div class="demo-result-details">
+
+                        <div class="demo-detail-item">
+                            <span class="demo-detail-label">Confidence</span>
+                            <span class="demo-detail-value">{{ confidence }}%</span>
+                        </div>
+
+                        <div class="demo-detail-item">
+                            <span class="demo-detail-label">Prediction Time</span>
+                            <span class="demo-detail-value">{{ timestamp }}</span>
+                        </div>
+
+                        <div class="demo-detail-item">
+                            <span class="demo-detail-label">Live Clock</span>
+                            <span class="demo-detail-value" id="liveClock">--:--:--</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SHOW INPUT VALUES -->
+            <div class="parameters-section">
+                <h2 class="section-heading">Input Parameters</h2>
+
+                <div class="parameters-grid">
+                    {% for key, value in input_data.items() %}
+                    <div class="parameter-item">
+                        <span class="param-label">{{ key }}</span>
+                        <span class="param-value">{{ value }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="output-actions">
+                <!-- 🔥 FIXED BUTTON (NOW CORRECT) -->
+                <a href="{{ url_for('reset_prediction') }}" class="btn btn-primary">New Prediction</a>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Home</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ALERT SOUND ON ATTACK -->
+    {% if prediction_result|lower != "normal" %}
+    <audio autoplay>
+        <source src="{{ url_for('static', filename='assets/src/alert-109578.mp3') }}" type="audio/mpeg">
+    </audio>
+    {% endif %}
+
+    <!-- LIVE CLOCK SCRIPT -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-IN', { hour12: true });
+            document.getElementById("liveClock").textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+</body>
+</html>
